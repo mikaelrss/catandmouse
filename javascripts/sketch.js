@@ -18,7 +18,7 @@ var allowedMovesCat = 5;
 //dynamics
 var hasMoved = false;
 var gameStarted = false;
-var isMouse = false;
+var isMouse = false ;
 
 function setup() {
     // Use for local development.
