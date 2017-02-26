@@ -49,8 +49,9 @@ game_server.pieceMoved = function(data){
             var cheeseEaten = false;
             _core.cheesePieces.forEach(function(cheese, index){
                 if(_core.mouse.x == cheese.x && _core.mouse.y == cheese.y){
-                    var index = _core.cheesePieces.indexOf(cheese);
-                    if(index){
+                    var index = -1;
+                    index = _core.cheesePieces.indexOf(cheese);
+                    if(index != -1) {
                         cheeseEaten = true;
                         _core.cheesePieces.splice(index,1);
                     }
