@@ -64,7 +64,7 @@ function setup() {
     });
 
     socket.on('mouseWon', function(){
-        bgColorColors.mouseColor;
+        bgColorColors.mouseColor; 
         gameStarted = false;
         hasMoved = true;
         console.log("Mouse won!");
