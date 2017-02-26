@@ -1,17 +1,24 @@
+//identifiers
+var socket;
+var game;
+var id;
+
+//grid
 var canvasSize = 580;
 var numberOfColumns = 24;
 var gridSize = canvasSize / numberOfColumns;
-var enemySquare;
+
+//entities
 var mouse;
 var ghost;
-var socket;
 var cat;
+var allowedMovesMouse = 3;
+var allowedMovesCat = 4;
+
+//dynamics
 var hasMoved = false;
 var gameStarted = false;
-var id;
 var isMouse = false;
-var players = [];
-var game;
 
 function setup() {
     // Use for local development.
@@ -124,14 +131,14 @@ function initializeGrid(){
 }
 
 function initializePlayers(data) {
-    mouse = new Square(data.mouse.x, data.mouse.y, gridSize, numberOfColumns, Colors.mouseColor, 2);
-    cat = new Square(data.cat.x, data.cat.y, gridSize, numberOfColumns, Colors.catColor, 3);
+    mouse = new Square(data.mouse.x, data.mouse.y, gridSize, numberOfColumns, Colors.mouseColor, allowedMovesMouse);
+    cat = new Square(data.cat.x, data.cat.y, gridSize, numberOfColumns, Colors.catColor, allowedMovesCat);
 
     if(this.id == data.cat.id){
-        ghost = new Square(data.cat.x, data.cat.y, gridSize, numberOfColumns, Colors.sweetBrown, 3);
+        ghost = new Square(data.cat.x, data.cat.y, gridSize, numberOfColumns, Colors.sweetBrown, allowedMovesCat);
     }
     else{
         isMouse = true;
-        ghost = new Square(data.mouse.x, data.mouse.y, gridSize, numberOfColumns, Colors.sweetBrown, 2);
+        ghost = new Square(data.mouse.x, data.mouse.y, gridSize, numberOfColumns, Colors.sweetBrown, allowedMovesMouse);
     }
 }
