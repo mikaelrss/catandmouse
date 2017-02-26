@@ -20,12 +20,15 @@ var hasMoved = false;
 var gameStarted = false;
 var isMouse = false ;
 
+//
+var cheese = [];
+
 function setup() {
     // Use for local development.
     // Also switch port variable in nodeserver.js
 
-    // socket = io.connect('https:localhost:3001');
-    socket = io.connect('http://serene-sands-13615.herokuapp.com/');
+    socket = io.connect('http://localhost:3001');
+    // socket = io.connect('http://serene-sands-13615.herokuapp.com/');
     createCanvas(canvasSize + 1, canvasSize + 1);
 
     socket.on('connect', function(){
@@ -34,7 +37,11 @@ function setup() {
 
     socket.on('init', function(data){
         game = data;
+        console.log(data);
         initializePlayers(data.core);
+        if(isMouse){
+            initializeCheese(data.core.cheesePieces);
+        }
         gameStarted = true;
     });
 
@@ -50,6 +57,16 @@ function setup() {
         gameStarted = false;
         console.log("Cat won!");
     });
+
+    socket.on('cheeseEaten', function(cheeses){
+        console.log("ateCHeese");
+        initializeCheese(cheeses.cheese);
+    });
+
+    socket.on('mouseWon', function(){
+        gameStarted = false;
+        console.log("Mouse won!");
+    });
 }
 
 function draw() {
@@ -59,6 +76,11 @@ function draw() {
     if(!gameStarted) return;
 
     initializeGrid();
+
+    cheese.forEach(function(key, value){
+        // console.log(key)
+        key.show();
+    });
 
     ghost.show();
     mouse.show();
@@ -91,10 +113,6 @@ function keyPressed(){
     else{
         console.log("You have to wait for the other player to move!");
     }
-}
-
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function initializeGrid(){
@@ -141,4 +159,13 @@ function initializePlayers(data) {
         isMouse = true;
         ghost = new Square(data.mouse.x, data.mouse.y, gridSize, numberOfColumns, Colors.sweetBrown, allowedMovesMouse);
     }
+}
+
+function initializeCheese(cheeseArray){
+    console.log(cheeseArray)
+    cheese = [];
+
+    cheeseArray.forEach(function(key, value){
+        cheese.push(new Square(key.x, key.y, gridSize, numberOfColumns, Colors.cheese));
+    });
 }

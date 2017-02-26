@@ -13,3 +13,4 @@ Colors.sweetBrown = '#CDE7B0';
 Colors.mouseColor = '#476C9B';
 
 Colors.catColor = '#BE6E46';
+Colors.cheese = '#2CF6B3';

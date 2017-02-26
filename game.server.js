@@ -46,11 +46,32 @@ game_server.pieceMoved = function(data){
                 gameToUpdate.player_client.emit('catWon');
             }
 
+            var cheeseEaten = false;
+            _core.cheesePieces.forEach(function(cheese, index){
+                console.log(cheese);
+                if(_core.mouse.x == cheese.x && _core.mouse.y == cheese.y){
+                    console.log("should eat ceese");
+                    var index = _core.cheesePieces.indexOf(cheese);
+                    if(index){
+                        // gameToUpdate.player_host.emit("cheeseEaten");
+                        console.log("We ate cheese")
+                        cheeseEaten = true;
+                        _core.cheesePieces.splice(index,1);
+                    }
+                }
+            });
+
+            if(cheeseEaten) gameToUpdate.player_client.emit("cheeseEaten", {cheese: _core.cheesePieces});
+            cheeseEaten = false;            
+
+            if(_core.cheesePieces.length < 1){
+                gameToUpdate.player_host.emit("mouseWon");
+                gameToUpdate.player_client.emit("mouseWon");
+            }
+
             gameToUpdate.player_host.emit('movePieces', {core: _core});
             gameToUpdate.player_client.emit('movePieces', {core: _core});
         }
-
-        console.log(playerToUpdate);
     }
 };
 

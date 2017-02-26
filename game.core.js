@@ -1,7 +1,7 @@
 game_core = function(instance){
     this.cat = positionPlayer(instance.player_host.id);
     this.mouse = positionPlayer(0);
-    this.obstacles = [];
+    this.cheesePieces = positionCheese();
     
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -15,7 +15,18 @@ game_core = function(instance){
             waiting: false
         }
         return data;
-
         //TODO: create method for ensuring sufficient initial separation of cat and mouse.
     };
+
+    function positionCheese() {
+        var cp = [];
+        for (var i = 0; i < 10; i++){
+            var cheese = {
+                x: getRandomInt(0, 23),
+                y: getRandomInt(0, 23)
+            };  
+            cp.push(cheese);
+        }
+        return cp;
+    }
 }
