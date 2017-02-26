@@ -1,5 +1,5 @@
 body{
-    background-color: #D1FAFF;
+    background-color: #F2E9E4;
     margin: 0;
 }
 
@@ -17,7 +17,7 @@ canvas {
     position: absolute;
     text-align: center;
     width: 100%;
-    color: #4C2C69;
+    color: #E1D89F;
     font-family: 'Verdana';
     font-size: 20px; 
 }

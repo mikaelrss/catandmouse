@@ -3,14 +3,16 @@ function Colors(){
 }
 
 //Background
-Colors.gridStroke = '#DCD865';
-Colors.background = '#F4F089';
-Colors.range = '#DECC46';
-Colors.catRange = '#B1AD51';
+Colors.gridStroke = '#66cc80';
+Colors.background = '#9bdeac';
+
+Colors.range = '#c88b6a';
+Colors.catRange = '#7FB6DB';
 
 //Players
-Colors.sweetBrown = '#CDE7B0';
-Colors.mouseColor = '#476C9B';
+Colors.sweetBrown = '#840032';
+Colors.mouseColor = '#ba6e45';
 
-Colors.catColor = '#BE6E46';
-Colors.cheese = '#2CF6B3';
+Colors.catColor = '#6689A1';
+Colors.cheese = '#FFE548';
+Colors.cheeseBorder = '#BCA834';
