@@ -80,8 +80,9 @@ function draw() {
         key.show();
     });
 
-
+    stroke(Colors.sweetBrown);
     ghost.show();
+    
     stroke(Colors.mouseColor);
     mouse.show();
 
