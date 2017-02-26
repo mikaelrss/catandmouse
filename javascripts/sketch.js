@@ -12,8 +12,8 @@ var gridSize = canvasSize / numberOfColumns;
 var mouse;
 var ghost;
 var cat;
-var allowedMovesMouse = 3;
-var allowedMovesCat = 5;
+var allowedMovesMouse = 2;
+var allowedMovesCat = 4;
 
 //dynamics
 var hasMoved = false;
