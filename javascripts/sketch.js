@@ -5,7 +5,7 @@ var id;
 
 //grid
 var canvasSize = 580;
-var numberOfColumns = 24;
+var numberOfColumns = 33;
 var gridSize = canvasSize / numberOfColumns;
 
 //entities

@@ -15,8 +15,8 @@ game_core = function(instance){
     function positionPlayer(id){
         var data = {
             id: id,
-            x: getRandomInt(0, 23),
-            y: getRandomInt(0, 23),
+            x: getRandomInt(0, 32),
+            y: getRandomInt(0, 32),
             waiting: false
         }
         return data;
