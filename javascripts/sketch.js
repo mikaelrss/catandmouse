@@ -53,6 +53,7 @@ function setup() {
     });
 
     socket.on('catWon', function(){
+        background(Colors.catColor);
         gameStarted = false;
         console.log("Cat won!");
     });
@@ -62,7 +63,8 @@ function setup() {
     });
 
     socket.on('mouseWon', function(){
-        // gameStarted = false;
+        background(Colors.mouseColor);
+        gameStarted = false;
         hasMoved = true;
         console.log("Mouse won!");
     });
