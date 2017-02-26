@@ -22,6 +22,7 @@ var isMouse = false ;
 
 //
 var cheese = [];
+var bgColor = Colors.background;
 
 function setup() {
     // Use for local development.
@@ -53,8 +54,7 @@ function setup() {
     });
 
     socket.on('catWon', function(){
-        background(Colors.catColor);
-        draw();
+        bgColor = Colors.catColor;
         gameStarted = false;
         console.log("Cat won!");
     });
@@ -64,8 +64,7 @@ function setup() {
     });
 
     socket.on('mouseWon', function(){
-        background(Colors.mouseColor);
-        draw();
+        bgColorColors.mouseColor;
         gameStarted = false;
         hasMoved = true;
         console.log("Mouse won!");
@@ -74,7 +73,7 @@ function setup() {
 
 function draw() {
     noStroke();
-    background(Colors.background);
+    background(bgColor);
 
     if(!gameStarted) return;
 
