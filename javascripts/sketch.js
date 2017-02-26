@@ -62,7 +62,8 @@ function setup() {
     });
 
     socket.on('mouseWon', function(){
-        gameStarted = false;
+        // gameStarted = false;
+        hasMoved = true;
         console.log("Mouse won!");
     });
 }
@@ -82,7 +83,7 @@ function draw() {
 
     stroke(Colors.sweetBrown);
     ghost.show();
-    
+
     stroke(Colors.mouseColor);
     mouse.show();
 
