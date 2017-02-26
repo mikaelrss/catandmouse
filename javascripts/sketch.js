@@ -13,7 +13,7 @@ var mouse;
 var ghost;
 var cat;
 var allowedMovesMouse = 3;
-var allowedMovesCat = 4;
+var allowedMovesCat = 5;
 
 //dynamics
 var hasMoved = false;
