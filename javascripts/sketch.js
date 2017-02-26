@@ -1,5 +1,5 @@
-var canvasSize = 600;
-var numberOfColumns = 20;
+var canvasSize = 580;
+var numberOfColumns = 33;
 var gridSize = canvasSize / numberOfColumns;
 var enemySquare;
 var mouse;
@@ -14,17 +14,19 @@ var players = [];
 var game;
 
 function setup() {
+    // Use for local development.
+    // Also switch port variable in nodeserver.js
+
+    // socket = io.connect('https:localhost:3001');
     socket = io.connect('http://serene-sands-13615.herokuapp.com/');
     createCanvas(canvasSize + 1, canvasSize + 1);
 
     socket.on('connect', function(){
         id = socket.id;
-        // console.log(id);
     });
 
     socket.on('init', function(data){
         game = data;
-        // console.log(game);
         initializePlayers(data.core);
         gameStarted = true;
     });
@@ -57,7 +59,6 @@ function draw() {
 }
 
 function keyPressed(){
-    // console.log(this.ghost.x);
     if(!gameStarted) return;
     if(!hasMoved){
         var originalPos; 
@@ -71,7 +72,6 @@ function keyPressed(){
 
         if (key === ' '){
             hasMoved = true;
-            // console.log(game.id);    
             var data = {    
                 gameid: game.id,
                 playerid: socket.id,
@@ -123,10 +123,6 @@ function initializeGrid(){
     }
 }
 
-function drawPlayers(){
-    
-}
-
 function initializePlayers(data) {
     mouse = new Square(data.mouse.x, data.mouse.y, gridSize, numberOfColumns, Colors.mouseColor, 2);
     cat = new Square(data.cat.x, data.cat.y, gridSize, numberOfColumns, Colors.catColor, 3);
@@ -138,5 +134,4 @@ function initializePlayers(data) {
         isMouse = true;
         ghost = new Square(data.mouse.x, data.mouse.y, gridSize, numberOfColumns, Colors.sweetBrown, 2);
     }
-    // console.log(this.ghost);
 }

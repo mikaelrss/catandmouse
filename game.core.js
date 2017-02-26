@@ -15,11 +15,13 @@ game_core = function(instance){
     function positionPlayer(id){
         var data = {
             id: id,
-            x: getRandomInt(0, 19),
-            y: getRandomInt(0, 19),
+            x: getRandomInt(0, 32),
+            y: getRandomInt(0, 32),
             waiting: false
         }
         return data;
+
+        //TODO: create method for ensuring sufficient initial separation of cat and mouse.
     };
 
     function assignCatAndMouse(id){

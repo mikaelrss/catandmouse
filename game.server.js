@@ -15,8 +15,6 @@ game_server.createGame = function(host){
     this.game_count++;
 
     game.gamecore = new game_core(game);
-    console.log("Host will be: " + host.id);
-
     host.game = game.gamecore;
 };
 
@@ -26,7 +24,6 @@ game_server.endGame = function(gameid, userid){
     if(gameToEnd){
         delete this.games[gameid];
         this.game_count--;
-        console.log("deleted");
     }
 };
 
@@ -41,16 +38,12 @@ game_server.pieceMoved = function(data){
         playerToUpdate.waiting = true;
 
         if(_core.cat.waiting && _core.mouse.waiting){
-            console.log("both moved");
-
             _core.cat.waiting = false;
             _core.mouse.waiting = false;
 
             if(_core.cat.x == _core.mouse.x && _core.cat.y == _core.mouse.y){
                 gameToUpdate.player_host.emit('catWon');
                 gameToUpdate.player_client.emit('catWon');
-
-                console.log("won");
             }
 
             gameToUpdate.player_host.emit('movePieces', {core: _core});
@@ -70,8 +63,6 @@ game_server.startGame = function(gameInstance){
 };
 
 game_server.findGame = function(player){
-    console.log("Looking for game. There are currently: " + this.game_count + " games");
-
     //game exists
     if(this.game_count){
         for (var gameId in this.games){
