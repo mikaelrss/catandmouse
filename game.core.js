@@ -31,13 +31,3 @@ game_core = function(instance){
         }
     }
 }
-
-// exports.createGameCore = function(player_host){
-//     this.mouse = positionPlayer(player_host.id);
-//     this.cat = {};
-// };
-
-// exports.connectClientPlayer = function(game_instance){
-//     game_instance.mouse = positionPlayer(player_client.id);
-//     console.log(game_instance.mouse);
-// }

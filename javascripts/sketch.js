@@ -14,7 +14,7 @@ var players = [];
 var game;
 
 function setup() {
-    socket = io.connect('http://localhost:3001');
+    socket = io.connect('http://serene-sands-13615.herokuapp.com/');
     createCanvas(canvasSize + 1, canvasSize + 1);
 
     socket.on('connect', function(){
