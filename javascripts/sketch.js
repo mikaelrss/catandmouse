@@ -1,5 +1,5 @@
 var canvasSize = 580;
-var numberOfColumns = 33;
+var numberOfColumns = 24;
 var gridSize = canvasSize / numberOfColumns;
 var enemySquare;
 var mouse;
