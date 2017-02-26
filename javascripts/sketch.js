@@ -27,8 +27,8 @@ function setup() {
     // Use for local development.
     // Also switch port variable in nodeserver.js
 
-    // socket = io.connect('http://localhost:3001');
-    socket = io.connect('http://serene-sands-13615.herokuapp.com/');
+    socket = io.connect('http://localhost:3001');
+    // socket = io.connect('http://serene-sands-13615.herokuapp.com/');
     createCanvas(canvasSize + 1, canvasSize + 1);
 
     socket.on('connect', function(){
@@ -37,7 +37,6 @@ function setup() {
 
     socket.on('init', function(data){
         game = data;
-        console.log(data);
         initializePlayers(data.core);
         if(isMouse){
             initializeCheese(data.core.cheesePieces);
@@ -59,7 +58,6 @@ function setup() {
     });
 
     socket.on('cheeseEaten', function(cheeses){
-        console.log("ateCHeese");
         initializeCheese(cheeses.cheese);
     });
 
@@ -78,7 +76,6 @@ function draw() {
     initializeGrid();
 
     cheese.forEach(function(key, value){
-        // console.log(key)
         key.show();
     });
 
@@ -162,7 +159,6 @@ function initializePlayers(data) {
 }
 
 function initializeCheese(cheeseArray){
-    console.log(cheeseArray)
     cheese = [];
 
     cheeseArray.forEach(function(key, value){

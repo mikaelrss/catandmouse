@@ -48,13 +48,9 @@ game_server.pieceMoved = function(data){
 
             var cheeseEaten = false;
             _core.cheesePieces.forEach(function(cheese, index){
-                console.log(cheese);
                 if(_core.mouse.x == cheese.x && _core.mouse.y == cheese.y){
-                    console.log("should eat ceese");
                     var index = _core.cheesePieces.indexOf(cheese);
                     if(index){
-                        // gameToUpdate.player_host.emit("cheeseEaten");
-                        console.log("We ate cheese")
                         cheeseEaten = true;
                         _core.cheesePieces.splice(index,1);
                     }
@@ -86,6 +82,7 @@ game_server.startGame = function(gameInstance){
 game_server.findGame = function(player){
     //game exists
     if(this.game_count){
+        console.log(this.games)
         for (var gameId in this.games){
             var gameInstance = this.games[gameId];
 

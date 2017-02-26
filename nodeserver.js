@@ -34,8 +34,8 @@ function handleRequest(req, res){
 var server = http.createServer(handleRequest);
 
 // Use for local development. Also switch io connection in sketch.js
-// var port = 3001;
-var port = process.env.PORT || 8080;
+var port = 3001;
+// var port = process.env.PORT || 8080;
 server.listen(port);
 
 var gameServer = require('./game.server.js');
@@ -54,6 +54,7 @@ io.sockets.on('connection',
     });
     
     client.on('disconnect', function() {
+        console.log(client.game.id);
         gameServer.endGame(client.game.id, client.id);
     });   
   });
