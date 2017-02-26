@@ -1,0 +1,23 @@
+body{
+    background-color: #D1FAFF;
+    margin: 0;
+}
+
+canvas {
+    padding-left: 0;
+    padding-right: 0;
+    margin: auto;
+    display: block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.sketch__text{
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    color: #4C2C69;
+    font-family: 'Verdana';
+    font-size: 20px; 
+}

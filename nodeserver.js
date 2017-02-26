@@ -1,0 +1,65 @@
+var http = require('http');
+var path = require('path');
+var fs = require('fs');
+var promsie = require('promise');
+
+function handleRequest(req, res){
+    var pathname = req.url;
+
+    if(pathname == '/'){
+        pathname = '/index.html';
+    }
+
+    var ext = path.extname(pathname);
+
+    var typeExt = {
+        '.html': 'text/html',
+        '.js': 'text/javascript',
+        '.css': 'text/css'
+    };
+
+    var contentType = typeExt[ext] || 'text/plain';
+    fs.readFile(__dirname + pathname,
+    function(err, data){
+        if(err){
+            res.writeHead(500);
+            return res.end('Error loading ' + pathname);
+        }
+
+        res.writeHead(200,{'Content-Type': contentType});
+        res.end(data);
+    });
+};
+
+var server = http.createServer(handleRequest);
+server.listen(3001);
+
+var gameServer = require('./game.server.js');
+
+
+
+var users = [];
+
+var io = require('socket.io').listen(server);
+
+io.sockets.on('connection',
+  function (client) {
+
+    // console.log("We have a new client: " + client.id);
+
+    gameServer.findGame(client);
+
+    client.on('pieceMoved', function(data) {
+        console.log("player: " + data.x + " " + data.y);
+        console.log(data);
+        gameServer.pieceMoved(data);
+    });
+
+    client.on('message', function(data){
+        gameServer.handleClientMessage(client, data);
+    });
+    
+    client.on('disconnect', function() {
+        gameServer.endGame(client.game.id, client.id);
+    });   
+  });
