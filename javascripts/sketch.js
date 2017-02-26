@@ -54,6 +54,7 @@ function setup() {
 
     socket.on('catWon', function(){
         background(Colors.catColor);
+        draw();
         gameStarted = false;
         console.log("Cat won!");
     });
@@ -64,6 +65,7 @@ function setup() {
 
     socket.on('mouseWon', function(){
         background(Colors.mouseColor);
+        draw();
         gameStarted = false;
         hasMoved = true;
         console.log("Mouse won!");
