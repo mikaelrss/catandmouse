@@ -4,7 +4,7 @@ var game;
 var id;
 
 //grid
-var canvasSize = 580;
+var canvasSize = 576;
 var numberOfColumns = 24;
 var gridSize = canvasSize / numberOfColumns;
 
@@ -78,18 +78,12 @@ function draw() {
 
     initializeGrid();
 
-    stroke(Colors.cheeseBorder);
     cheese.forEach(function(key, value){
         key.show();
     });
 
-    stroke(Colors.sweetBrown);
     ghost.show();
-
-    stroke(Colors.mouseColor);
     mouse.show();
-
-    stroke(Colors.catColor);
     cat.show();
 }
 
@@ -122,7 +116,8 @@ function keyPressed(){
 }
 
 function initializeGrid(){
-    strokeWeight(2);
+    strokeWeight(1);
+    stroke(Colors.gridStroke);
 
     var startX = (mouse.x - mouse.allowedMoves) < 0 ? 0 : mouse.x - mouse.allowedMoves;
     var startY = (mouse.y - mouse.allowedMoves) < 0 ? 0 : mouse.y - mouse.allowedMoves;
@@ -137,14 +132,11 @@ function initializeGrid(){
     for (var i = 0; i < numberOfColumns; i++){
         for (var u = 0; u < numberOfColumns; u++){
             var bg = true;
-            stroke(Colors.gridStroke);
             if(i >= startCatX && i <= endCatX && u >= startCatY && u <= endCatY){
-                stroke(Colors.catColor);
                 fill(Colors.catRange);
                 bg = false;
             }
             if(i >= startX && i <= endX && u >= startY && u <= endY) {
-                stroke(Colors.mouseColor);
                 fill(Colors.range);
                 bg = false;
             }
