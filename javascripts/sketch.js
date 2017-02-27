@@ -29,6 +29,7 @@ var bgColor = Colors.background;
 
 function preload(){
     bgMusic = loadSound("../sounds/bensound-buddy.mp3");
+    bgMusic.amp(0.3);
 }
 
 function setup() {
