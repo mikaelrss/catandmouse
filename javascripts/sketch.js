@@ -3,6 +3,9 @@ var socket;
 var game;
 var id;
 
+//sounds
+var bgMusic;
+
 //grid
 var canvasSize = 576;
 var numberOfColumns = 24;
@@ -24,6 +27,10 @@ var isMouse = false ;
 var cheese = [];
 var bgColor = Colors.background;
 
+function preload(){
+    bgMusic = loadSound("../sounds/bensound-buddy.mp3");
+}
+
 function setup() {
     // Use for local development.
     // Also switch port variable in nodeserver.js
@@ -38,6 +45,7 @@ function setup() {
 
     socket.on('init', function(data){
         game = data;
+        bgMusic.loop();
         initializePlayers(data.core);
         if(isMouse){
             initializeCheese(data.core.cheesePieces);
@@ -88,6 +96,13 @@ function draw() {
 }
 
 function keyPressed(){
+    if(key === "M"){
+        if(bgMusic.isPlaying()){
+            bgMusic.stop();
+        }else{
+            bgMusic.loop();
+        }
+    }
     if(!gameStarted) return;
     if(!hasMoved){
         var originalPos; 
