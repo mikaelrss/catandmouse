@@ -14,5 +14,4 @@ Colors.sweetBrown = 'rgba(255,255,255,0.3)';
 Colors.mouseColor = '#d87027';
 
 Colors.catColor = '#116ea4';
-Colors.cheese = 'rgba(255,241,72,0.7)';
-Colors.cheeseBorder = '#BCA834';
+Colors.cheese = 'rgba(255,241,72,0.8)';

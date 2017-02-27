@@ -29,15 +29,14 @@ var bgColor = Colors.background;
 
 function preload(){
     bgMusic = loadSound("../sounds/bensound-buddy.mp3");
-    bgMusic.amp(0.3);
 }
 
 function setup() {
     // Use for local development.
     // Also switch port variable in nodeserver.js
 
-    // socket = io.connect('http://localhost:3001');
-    socket = io.connect('http://serene-sands-13615.herokuapp.com/');
+    socket = io.connect('http://localhost:3001');
+    // socket = io.connect('http://serene-sands-13615.herokuapp.com/');
     createCanvas(canvasSize + 1, canvasSize + 1);
 
     socket.on('connect', function(){
@@ -47,6 +46,7 @@ function setup() {
     socket.on('init', function(data){
         game = data;
         bgMusic.loop();
+        bgMusic.amp(0.05);
         initializePlayers(data.core);
         if(isMouse){
             initializeCheese(data.core.cheesePieces);
@@ -102,6 +102,7 @@ function keyPressed(){
             bgMusic.stop();
         }else{
             bgMusic.loop();
+            bgMusic.amp(0.05);
         }
     }
     if(!gameStarted) return;
