@@ -37,6 +37,13 @@ game_server.pieceMoved = function(data){
         playerToUpdate.y = data.y;
         playerToUpdate.waiting = true;
 
+        if (playerToUpdate === _core.cat){
+            gameToUpdate.player_host.emit('catReady');
+            gameToUpdate.player_client.emit('catReady');
+        } else{
+            gameToUpdate.player_host.emit('mouseReady');
+            gameToUpdate.player_client.emit('mouseReady');
+        } 
         if(_core.cat.waiting && _core.mouse.waiting){
             _core.cat.waiting = false;
             _core.mouse.waiting = false;
@@ -58,7 +65,10 @@ game_server.pieceMoved = function(data){
                 }
             });
 
-            if(cheeseEaten) gameToUpdate.player_client.emit("cheeseEaten", {cheese: _core.cheesePieces});
+            if(cheeseEaten) {
+                gameToUpdate.player_client.emit("cheeseEaten", {cheese: _core.cheesePieces});
+                gameToUpdate.player_host.emit("cheeseEaten", {cheese: _core.cheesePieces});
+            }
             cheeseEaten = false;            
 
             if(_core.cheesePieces.length < 1){

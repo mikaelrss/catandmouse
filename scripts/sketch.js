@@ -22,6 +22,8 @@ var allowedMovesCat = 3;
 var hasMoved = false;
 var gameStarted = false;
 var isMouse = false ;
+var numberOfCheesePieces = 0;
+var mouseScore = 0;
 
 //
 var cheese = [];
@@ -44,6 +46,8 @@ function setup() {
     });
 
     socket.on('init', function(data){
+        numberOfCheesePieces = data.core.cheesePieces.length;
+        document.getElementById('score__mouse').innerHTML = numberOfCheesePieces;
         game = data;
         bgMusic.loop();
         bgMusic.amp(0.05);
@@ -54,29 +58,12 @@ function setup() {
         gameStarted = true;
     });
 
-    socket.on('movePieces', function(data){
-        hasMoved = false;
-        mouse.x = data.core.mouse.x;
-        mouse.y = data.core.mouse.y;
-        cat.x = data.core.cat.x;
-        cat.y = data.core.cat.y;
-    });
-
-    socket.on('catWon', function(){
-        bgColor = Colors.catColor;
-        gameStarted = false;
-        console.log("Cat won!");
-    });
-
-    socket.on('cheeseEaten', function(cheeses){
-        initializeCheese(cheeses.cheese);
-    });
-
-    socket.on('mouseWon', function(){
-        bgColor = Colors.mouseColor; 
-        gameStarted = false;
-        console.log("Mouse won!");
-    });
+    registerEventListener('movePieces', movePieces)
+    registerEventListener('catWon', catWon);
+    registerEventListener('mouseWon', mouseWon);
+    registerEventListener('cheeseEaten', cheeseEaten);
+    registerEventListener('catReady', catReady);
+    registerEventListener('mouseReady', mouseReady);
 }
 
 function draw() {
@@ -185,3 +172,42 @@ function initializeCheese(cheeseArray){
         cheese.push(new Square(key.x, key.y, gridSize, numberOfColumns, Colors.cheese));
     });
 }
+
+function registerEventListener(eventName, eventFunction){
+    socket.on(eventName, eventFunction);
+} 
+
+function cheeseEaten(cheeses) {
+    mouseScore += 1;
+    document.getElementById('score__mouse').innerHTML = numberOfCheesePieces - mouseScore;
+    initializeCheese(cheeses.cheese);
+}
+
+function catWon(){
+    bgColor = Colors.catColor;
+    gameStarted = false;
+    console.log("Cat won!");
+}
+function mouseWon(){
+    bgColor = Colors.mouseColor; 
+    gameStarted = false;
+    console.log("Mouse won!");
+}
+
+function catReady(){
+    document.getElementById('cat-status').className = 'loaded';
+}
+
+function mouseReady(){  
+    document.getElementById('mouse-status').className = 'loaded';
+}
+
+function movePieces(data){
+        hasMoved = false;
+        mouse.x = data.core.mouse.x;
+        mouse.y = data.core.mouse.y;
+        cat.x = data.core.cat.x;
+        cat.y = data.core.cat.y;
+        document.getElementById('mouse-status').className = 'loader';
+        document.getElementById('cat-status').className = 'loader';
+    }

@@ -1,17 +1,35 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <script language="javascript" type="text/javascript" src="javascripts/p5.js"></script>
-  <script language="javascript" type="text/javascript" src="javascripts/p5.sound.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script language="javascript" type="text/javascript" src="javascripts/coolor.js"></script>
-  <script language="javascript" type="text/javascript" src="javascripts/sketch.js"></script>
-  <script language="javascript" type="text/javascript" src="javascripts/square.js"></script>
+  <script language="javascript" type="text/javascript" src="scripts/vendor/p5.js"></script>
+  <script language="javascript" type="text/javascript" src="scripts/vendor/p5.sound.js"></script>
+  <script language="javascript" type="text/javascript" src="scripts/coolor.js"></script>
+  <script language="javascript" type="text/javascript" src="scripts/sketch.js"></script>
+  <script language="javascript" type="text/javascript" src="scripts/square.js"></script>
   <link rel="stylesheet" type="text/css" href="css/main.css"/>
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 </head>
 
 <body>
-  <div class="sketch__text">
+  <div class="container">
+    <div class="status-container">
+      Mouse: 
+      <div id="mouse-status" class="loader"></div>
+    </div> 
+
+    <div class="status-container">
+      Cat: 
+      <div id="cat-status" class="loader"></div>
+    </div>
+
+
+    <div class="sketch__text">
+      Cheese pieces left: 
+      <span id="score__mouse"> </span>
+    </div>
+    
   </div>
+  <div class="footer-text">Icon made by <a href="http://www.flaticon.com/authors/alfredo-hernandez" title="Alfredo Hernandez">Alfredo Hernandez</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>  
 </body>
 </html>

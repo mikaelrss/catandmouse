@@ -1,7 +1,8 @@
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
-var promsie = require('promise');
+var promise = require('promise');
+var gameServer = require('./scripts/server/game.server.js');
 
 function handleRequest(req, res){
     var pathname = req.url;
@@ -37,8 +38,6 @@ var server = http.createServer(handleRequest);
 var port = 3001;
 // var port = process.env.PORT || 8080;
 server.listen(port);
-
-var gameServer = require('./game.server.js');
 var io = require('socket.io').listen(server);
 
 io.sockets.on('connection',

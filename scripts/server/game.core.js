@@ -1,3 +1,5 @@
+var numberOfCheesePieces = 10;
+
 game_core = function(instance){
     this.cat = positionPlayer(instance.player_host.id);
     this.mouse = positionPlayer(0);
@@ -20,7 +22,7 @@ game_core = function(instance){
 
     function positionCheese() {
         var cp = [];
-        for (var i = 0; i < 10; i++){
+        for (var i = 0; i < numberOfCheesePieces; i++){
             var cheese = {
                 x: getRandomInt(0, 23),
                 y: getRandomInt(0, 23)
