@@ -40,24 +40,11 @@ function setup() {
     socket = io.connect('http://localhost:3001');
     // socket = io.connect('http://serene-sands-13615.herokuapp.com/');
     createCanvas(canvasSize + 1, canvasSize + 1);
-
     socket.on('connect', function(){
         id = socket.id;
     });
 
-    socket.on('init', function(data){
-        numberOfCheesePieces = data.core.cheesePieces.length;
-        document.getElementById('score__mouse').innerHTML = numberOfCheesePieces;
-        game = data;
-        bgMusic.loop();
-        bgMusic.amp(0.05);
-        initializePlayers(data.core);
-        if(isMouse){
-            initializeCheese(data.core.cheesePieces);
-        }
-        gameStarted = true;
-    });
-
+    registerEventListener('init', init)
     registerEventListener('movePieces', movePieces)
     registerEventListener('catWon', catWon);
     registerEventListener('mouseWon', mouseWon);
@@ -203,11 +190,25 @@ function mouseReady(){
 }
 
 function movePieces(data){
-        hasMoved = false;
-        mouse.x = data.core.mouse.x;
-        mouse.y = data.core.mouse.y;
-        cat.x = data.core.cat.x;
-        cat.y = data.core.cat.y;
-        document.getElementById('mouse-status').className = 'loader';
-        document.getElementById('cat-status').className = 'loader';
+    hasMoved = false;
+    mouse.x = data.core.mouse.x;
+    mouse.y = data.core.mouse.y;
+    cat.x = data.core.cat.x;
+    cat.y = data.core.cat.y;
+    document.getElementById('mouse-status').className = 'loader';
+    document.getElementById('cat-status').className = 'loader';
+}
+
+function init(data) {
+    numberOfCheesePieces = data.core.cheesePieces.length;
+    document.getElementById('score__mouse').innerHTML = numberOfCheesePieces;
+    document.getElementById('defaultCanvas0').style.filter = 'blur(0px);'
+    game = data;
+    bgMusic.loop();
+    bgMusic.amp(0.05);
+    initializePlayers(data.core);
+    if(isMouse){
+        initializeCheese(data.core.cheesePieces);
     }
+    gameStarted = true;
+}
