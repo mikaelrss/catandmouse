@@ -1,5 +1,5 @@
-// socket = io.connect('https://serene-sands-13615.herokuapp.com/');
-var socket = io.connect('http://localhost:3001');
+socket = io.connect('https://serene-sands-13615.herokuapp.com/');
+// var socket = io.connect('http://localhost:3001');
 var clientName;
 var roomListDOM;
 var roomDOMEntries = {};
