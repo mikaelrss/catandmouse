@@ -1,0 +1,33 @@
+.room-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    overflow-y: scroll;
+    position: relative;
+}
+
+.room-list a {
+    position:relative;
+    vertical-align: center;
+    height: 35px;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(40,40,124,0.2);
+    text-decoration: none;
+    color: #FA9F42;
+}
+
+.room-list span {
+    display: block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.lobby-chooser {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid red;
+    overflow: auto;
+}

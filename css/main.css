@@ -5,6 +5,25 @@ body{
     overflow: hidden;
 }
 
+/** {
+    background-color: rgba(255,0,0,0.1);
+}*/
+
+* {
+    font-family: 'Lato', sans-serif;
+}
+
+.btn {
+    border:none;
+    height: 75px;
+    padding-left: 40px;
+    padding-right: 40px;
+    background-color: #8EB1C7;
+    color: white;
+    font-size: 25px;
+    border: 2px solid rgba(40,40,124,0.2);
+}
+
 canvas {
     padding-left: 0;
     padding-right: 0;

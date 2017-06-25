@@ -3,12 +3,14 @@ var path = require('path');
 var fs = require('fs');
 var promise = require('promise');
 var gameServer = require('./scripts/server/game.server.js');
+var lobbyServer = require('./scripts/server/game.lobby.js');
 
 function handleRequest(req, res){
     var pathname = req.url;
 
     if(pathname === '/'){
-        pathname = '/index.html';
+        // pathname = '/index.html';
+        pathname = '/lobby-index.html';
     }
 
     var ext = path.extname(pathname);
@@ -40,20 +42,25 @@ console.log("PORT", process.env.PORT);
 server.listen(port);
 var io = require('socket.io').listen(server);
 
-io.sockets.on('connection',
-  function (client) {
-    gameServer.findGame(client);
+io.sockets.on('connection', function (client) {
+    // gameServer.findGame(client);
+    lobbyServer.connect(client);
 
-    client.on('pieceMoved', function(data) {
-        gameServer.pieceMoved(data);
+    client.on('gameCreated', function(data){
+        lobbyServer.createServer(data.clientName);
+        io.sockets.emit("new-game-created", Object.keys(lobbyServer.activeRooms));
     });
+    // client.on('pieceMoved', function(data) {
+    //     gameServer.pieceMoved(data);
+    // });
 
-    client.on('message', function(data){
-        gameServer.handleClientMessage(client, data);
-    });
+    // client.on('message', function(data){
+    //     gameServer.handleClientMessage(client, data);
+    // });
     
     client.on('disconnect', function() {
-        console.log(client.game.id);
-        gameServer.endGame(client.game.id, client.id);
-    });   
-  });
+        lobbyServer.disconnect(client.lobby_name);
+        var roomName = client.lobby_name;
+        io.sockets.emit("game-removed", roomName);
+    });
+});   

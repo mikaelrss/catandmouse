@@ -3,9 +3,10 @@ var UUID = require('node-uuid');
 
 require('./game.core.js');
 
-game_server.createGame = function(host){
+game_server.createGame = function(host, gameName){
     var game = {
         id: UUID(),
+        gameName: gameName,
         player_host: host,
         player_client: null,
         player_count: 1
@@ -93,7 +94,6 @@ game_server.startGame = function(gameInstance){
 game_server.findGame = function(player){
     //game exists
     if(this.game_count){
-        console.log(this.games)
         for (var gameId in this.games){
             var gameInstance = this.games[gameId];
 
@@ -113,4 +113,16 @@ game_server.findGame = function(player){
     else{
         this.createGame(player);
     }
+};
+
+game_server.joinExistingGame = function(player, gameName){
+    if(this.game_count){
+        var gameInstance = this.games[]
+    }
+}
+
+function emitEventToBothPlayers(eventName, data){
+    var data = data || {};
+    gameToUpdate.player_host.emit(eventName, data);
+    gameToUpdate.player_client.emit(eventName, data);
 };
