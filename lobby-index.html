@@ -25,6 +25,10 @@
     <div class="container">
         <div id="game-name"></div>
         <div id="game"> 
+            <div class="sketch__text">
+                Cheese pieces left: 
+                <span id="score__mouse"> </span>
+            </div>
             <div class="status-container">
                 Mouse: 
                 <div id="mouse-status" class="loader"></div>
@@ -35,12 +39,25 @@
                 <div id="cat-status" class="loader"></div>
             </div>
 
-
-            <div class="sketch__text">
-                Cheese pieces left: 
-                <span id="score__mouse"> </span>
+            <div class="controls">
+                <button onclick="goRight()" class="btn btn-arrows"> RIGHT </button>
+                <button onclick="goUp()" class="btn btn-arrows"> UP </button>
+                <button onclick="goLeft()" class="btn btn-arrows"> LEFT </button>
+                <button onclick="goDown()" class="btn btn-arrows"> DOWN </button>
             </div>
+            <button onclick="commit()" class="btn btn-commit"> COMMIT </button> 
         </div>
     </div>
+
+    <script type="text/javascript">
+        document.getElementById("room-list").addEventListener("click", function(e) {
+            e = e || window.event;
+            var target = e.target || e.srcElement, text = target.textContent || text.innerText;   
+            if(target.tagName === 'LI'){
+                console.log(text)
+                joinGame(text);
+            }
+        });
+    </script>
 </body>
 </html>

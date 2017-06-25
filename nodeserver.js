@@ -55,6 +55,7 @@ io.sockets.on('connection', function (client) {
     });
 
     client.on('joinGame', function(data){
+        console.log("JOIN", data )
         io.sockets.emit("game-removed", data.roomName);
         lobbyServer.joinGame(data.clientName, data.roomName);
     });

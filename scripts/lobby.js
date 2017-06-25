@@ -1,5 +1,5 @@
-socket = io.connect('https://serene-sands-13615.herokuapp.com/');
-// var socket = io.connect('http://localhost:3001');
+// socket = io.connect('https://serene-sands-13615.herokuapp.com/');
+var socket = io.connect('http://localhost:3001');
 var clientName;
 var roomListDOM;
 var roomDOMEntries = {};
@@ -41,6 +41,7 @@ function joinGame(roomName){
         roomName: roomName,
         clientName: clientName
     };
+    console.log("JOIN", data)
     socket.emit("joinGame", data);
     initializeRoomName(roomName);
     switchView();
@@ -56,13 +57,13 @@ function createPrivateRoom(){
 }
 
 function appendRoomDOM(roomName){
-    var aTag = document.createElement('li');
-    aTag.setAttribute('id', roomName);
-    aTag.innerHTML = roomName   ;
+    var liTag = document.createElement('li');
+    liTag.setAttribute('id', roomName);
+    liTag.innerHTML = roomName   ;
     if(!roomDOMEntries.hasOwnProperty(roomName)){
-        roomListDOM.appendChild(aTag);
+        roomListDOM.appendChild(liTag);
     }
-    roomDOMEntries[roomName] = aTag;
+    roomDOMEntries[roomName] = liTag;
 }
 
 function removeRoom(roomName){
@@ -81,11 +82,3 @@ function switchView(){
 function initializeRoomName(roomName){
     gameNameDOM.innerHTML = "<h1>" + roomName + "</h1>";
 }
-
-document.addEventListener('click', function(e) {
-    e = e || window.event;
-    var target = e.target || e.srcElement, text = target.textContent || text.innerText;   
-    if(target.tagName === 'LI'){
-        joinGame(text);
-    }
-}, false);

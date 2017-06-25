@@ -30,21 +30,17 @@ var cheese = [];
 var bgColor = Colors.background;
 
 function preload(){
-    bgMusic = loadSound("../sounds/bensound-buddy.mp3");
+    // bgMusic = loadSound("../sounds/bensound-buddy.mp3");
 }
 
 function setup() {
     document.getElementById('defaultCanvas0').style.display = "none";
-    // Use for local development.
-    // Also switch port variable in nodeserver.js
-
-    // socket = io.connect('http://localhost:3001');
-    // socket = io.connect('http://serene-sands-13615.herokuapp.com/');
     createCanvas(canvasSize + 1, canvasSize + 1);
-    // socket.on('connect', function(){
-    //     id = socket.id;
-    // });
-    id = socket.id;
+    
+    socket.on('message', function(id){
+        this.id = id;
+    });
+
     registerEventListener('init', init)
     registerEventListener('movePieces', movePieces)
     registerEventListener('catWon', catWon);
@@ -72,6 +68,69 @@ function draw() {
     cat.show();
 }
 
+function goLeft(){
+    if(!gameStarted) return;
+    var originalPos; 
+    var keyCode = RIGHT_ARROW;
+    if(isMouse){
+        originalPos = {x: mouse.x, y:mouse.y}
+    }
+    else{
+        originalPos = {x: cat.x, y: cat.y};
+    }
+    ghost.move(keyCode, originalPos);
+};
+
+function goRight(){
+    if(!gameStarted) return;
+    var originalPos; 
+    var keyCode = LEFT_ARROW;
+    if(isMouse){
+        originalPos = {x: mouse.x, y:mouse.y}
+    }
+    else{
+        originalPos = {x: cat.x, y: cat.y};
+    }
+    ghost.move(keyCode, originalPos);
+};
+
+function goUp(){
+    if(!gameStarted) return;
+    var originalPos;
+    var keyCode = UP_ARROW; 
+    if(isMouse){
+        originalPos = {x: mouse.x, y:mouse.y}
+    }
+    else{
+        originalPos = {x: cat.x, y: cat.y};
+    }
+    ghost.move(keyCode, originalPos);
+};
+
+function goDown(){
+    if(!gameStarted) return;
+    var originalPos; 
+    var keyCode = DOWN_ARROW;
+    if(isMouse){
+        originalPos = {x: mouse.x, y:mouse.y}
+    }
+    else{
+        originalPos = {x: cat.x, y: cat.y};
+    }
+    ghost.move(keyCode, originalPos);
+};
+
+function commit(){
+    hasMoved = true;
+    var data = {    
+        gameid: game.id,
+        playerid: socket.id,
+        x: ghost.x,
+        y: ghost.y
+    };
+    socket.emit('pieceMoved', data);
+};
+
 function keyPressed(){
     if(key === "M"){
         if(bgMusic.isPlaying()){
@@ -87,20 +146,13 @@ function keyPressed(){
         if(isMouse){
             originalPos = {x: mouse.x, y:mouse.y}
         }
-        else{
+        else{    
             originalPos = {x: cat.x, y: cat.y};
         }
         ghost.move(keyCode, originalPos);
 
         if (key === ' '){
-            hasMoved = true;
-            var data = {    
-                gameid: game.id,
-                playerid: socket.id,
-                x: ghost.x,
-                y: ghost.y
-            };
-            socket.emit('pieceMoved', data);
+            commit();
         }
     }
     else{
@@ -144,12 +196,12 @@ function initializeGrid(){
 function initializePlayers(data) {
     mouse = new Square(data.mouse.x, data.mouse.y, gridSize, numberOfColumns, Colors.mouseColor, allowedMovesMouse);
     cat = new Square(data.cat.x, data.cat.y, gridSize, numberOfColumns, Colors.catColor, allowedMovesCat);
-
-    if(this.id == data.cat.id){
+    console.log("ID", this.id);
+    if(!isMouse){
         ghost = new Square(data.cat.x, data.cat.y, gridSize, numberOfColumns, Colors.sweetBrown, allowedMovesCat);
     }
     else{
-        isMouse = true;
+        // this.isMouse = true;
         ghost = new Square(data.mouse.x, data.mouse.y, gridSize, numberOfColumns, Colors.sweetBrown, allowedMovesMouse);
     }
 }
@@ -213,10 +265,12 @@ function movePieces(data){
 }
 
 function init(data) {
-    console.log(data)
     numberOfCheesePieces = data.core.cheesePieces.length;
     document.getElementById('score__mouse').innerHTML = numberOfCheesePieces;
     game = data;
+    if(this.id !== data.core.cat.id){
+        isMouse = true;
+    }
     // bgMusic.loop();
     // bgMusic.amp(0.05);
     initializePlayers(data.core);

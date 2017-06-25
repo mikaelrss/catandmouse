@@ -82,8 +82,13 @@ game_server.pieceMoved = function(data){
 };
 
 game_server.startGame = function(gameInstance){
-    gameInstance.player_host.send(gameInstance.player_client.id);
-    gameInstance.player_client.send(gameInstance.player_host.id);
+    var hostId = gameInstance.player_host.id
+    var clientId = gameInstance.player_client.id
+    gameInstance.player_host.send(hostId);
+    gameInstance.player_client.send(clientId);
+
+    console.log(hostId);
+    console.log(clientId);
 
     emitEventToBothPlayers(gameInstance, "init", {core: gameInstance.gamecore, id: gameInstance.id});
 };

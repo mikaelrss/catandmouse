@@ -33,9 +33,8 @@ game_lobby.joinGame = function(clientName, roomName) {
     delete this.activeRooms[roomName];
 
     delete this.clientNames[clientName];
-
-    gameServer.joinExistingGame(player, id);
     console.log("PLAYING", this.roomsPlaying)
+    gameServer.joinExistingGame(player, id);
 }
 
 game_lobby.pieceMoved = function(data){
