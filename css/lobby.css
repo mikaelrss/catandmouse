@@ -1,33 +1,51 @@
 .room-list {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    overflow-y: scroll;
-    position: relative;
+    box-sizing: border-box;
+    width:80%;
+    margin-top: 0;
+    margin-bottom:20px;
+    overflow:hidden;
+    list-style: none;
+    padding: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    background: white;
+    min-height: 50px;
+    border-left: 2px solid rgba(40,40,124,0.2);
+    border-right: 2px solid rgba(40,40,124,0.2);
+    border-bottom: 2px solid rgba(40,40,124,0.2);
 }
 
-.room-list a {
-    position:relative;
-    vertical-align: center;
-    height: 35px;
-    padding-left: 25px;
-    padding-right: 25px;
-    margin-bottom: 10px;
-    border: 1px solid rgba(40,40,124,0.2);
+.room-list > li {
+    line-height:1.5em;
     text-decoration: none;
     color: #FA9F42;
+    text-align: center;
+    width: 25%;
+    display: inline-flex;
+    min-width: 150px;
+    justify-content: center;
 }
 
-.room-list span {
-    display: block;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+.room-list > li:hover{
+    color: rgba(142, 177, 199, 0.5)
+}
+
+.room-list a:hover{
+    background: rgba(255,255,255,0.2);
 }
 
 .lobby-chooser {
     display: flex;
     justify-content: space-between;
-    border: 1px solid red;
-    overflow: auto;
+    flex-direction: column;
+}
+
+.game-room-btn {
+    align-self: center;
+    width: 80%;
+}
+
+#game-name {
+    text-align: center;
+    margin-bottom: 40px;
 }

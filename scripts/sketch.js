@@ -34,16 +34,17 @@ function preload(){
 }
 
 function setup() {
+    document.getElementById('defaultCanvas0').style.display = "none";
     // Use for local development.
     // Also switch port variable in nodeserver.js
 
-    socket = io.connect('http://localhost:3001');
+    // socket = io.connect('http://localhost:3001');
     // socket = io.connect('http://serene-sands-13615.herokuapp.com/');
     createCanvas(canvasSize + 1, canvasSize + 1);
-    socket.on('connect', function(){
-        id = socket.id;
-    });
-
+    // socket.on('connect', function(){
+    //     id = socket.id;
+    // });
+    id = socket.id;
     registerEventListener('init', init)
     registerEventListener('movePieces', movePieces)
     registerEventListener('catWon', catWon);
@@ -51,6 +52,7 @@ function setup() {
     registerEventListener('cheeseEaten', cheeseEaten);
     registerEventListener('catReady', catReady);
     registerEventListener('mouseReady', mouseReady);
+    registerEventListener('gameEnded', gameEnded);
 }
 
 function draw() {
@@ -191,6 +193,15 @@ function mouseReady(){
     document.getElementById('mouse-status').className = 'loaded';
 }
 
+function gameEnded(){  
+    if(isMouse){
+        document.getElementById('cat-status').className = 'disconnected';
+    }else{
+        document.getElementById('mouse-status').className = 'disconnected';
+    }
+    alert('Aw shucks! The other player disconnected :(');
+}
+
 function movePieces(data){
     hasMoved = false;
     mouse.x = data.core.mouse.x;
@@ -202,9 +213,9 @@ function movePieces(data){
 }
 
 function init(data) {
+    console.log(data)
     numberOfCheesePieces = data.core.cheesePieces.length;
     document.getElementById('score__mouse').innerHTML = numberOfCheesePieces;
-    document.getElementById('defaultCanvas0').style.filter = 'blur(0px);'
     game = data;
     // bgMusic.loop();
     // bgMusic.amp(0.05);

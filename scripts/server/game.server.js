@@ -17,12 +17,17 @@ game_server.createGame = function(host, gameName){
 
     game.gamecore = new game_core(game);
     host.game = game.gamecore;
+    return game.id;
 };
 
-game_server.endGame = function(gameid, userid){
+game_server.endGame = function(gameid){
     var gameToEnd = this.games[gameid];
-
+    console.log("GAME_DISCONNECT", gameid);
     if(gameToEnd){
+        console.log("ENDIT")
+        var host = gameToEnd.gamecore.player_host;
+        var client = gameToEnd.gamecore.player_client;
+        emitEventToBothPlayers(gameToEnd, "gameEnded");
         delete this.games[gameid];
         this.game_count--;
     }
@@ -39,19 +44,16 @@ game_server.pieceMoved = function(data){
         playerToUpdate.waiting = true;
 
         if (playerToUpdate === _core.cat){
-            gameToUpdate.player_host.emit('catReady');
-            gameToUpdate.player_client.emit('catReady');
+            emitEventToBothPlayers(gameToUpdate, "catReady");
         } else{
-            gameToUpdate.player_host.emit('mouseReady');
-            gameToUpdate.player_client.emit('mouseReady');
+            emitEventToBothPlayers(gameToUpdate, "mouseReady");
         } 
         if(_core.cat.waiting && _core.mouse.waiting){
             _core.cat.waiting = false;
             _core.mouse.waiting = false;
 
             if(_core.cat.x == _core.mouse.x && _core.cat.y == _core.mouse.y){
-                gameToUpdate.player_host.emit('catWon');
-                gameToUpdate.player_client.emit('catWon');
+                emitEventToBothPlayers(gameToUpdate, "catWon");
             }
 
             var cheeseEaten = false;
@@ -67,18 +69,14 @@ game_server.pieceMoved = function(data){
             });
 
             if(cheeseEaten) {
-                gameToUpdate.player_client.emit("cheeseEaten", {cheese: _core.cheesePieces});
-                gameToUpdate.player_host.emit("cheeseEaten", {cheese: _core.cheesePieces});
+                emitEventToBothPlayers(gameToUpdate, "cheeseEaten", {cheese: _core.cheesePieces});
             }
             cheeseEaten = false;            
 
             if(_core.cheesePieces.length < 1){
-                gameToUpdate.player_host.emit("mouseWon");
-                gameToUpdate.player_client.emit("mouseWon");
+                emitEventToBothPlayers(gameToUpdate, "mouseWon");
             }
-
-            gameToUpdate.player_host.emit('movePieces', {core: _core});
-            gameToUpdate.player_client.emit('movePieces', {core: _core});
+            emitEventToBothPlayers(gameToUpdate, "movePieces", {core: _core});
         }
     }
 };
@@ -87,41 +85,23 @@ game_server.startGame = function(gameInstance){
     gameInstance.player_host.send(gameInstance.player_client.id);
     gameInstance.player_client.send(gameInstance.player_host.id);
 
-    gameInstance.player_host.emit('init', {core: gameInstance.gamecore, id: gameInstance.id});
-    gameInstance.player_client.emit('init', {core: gameInstance.gamecore, id: gameInstance.id});
+    emitEventToBothPlayers(gameInstance, "init", {core: gameInstance.gamecore, id: gameInstance.id});
 };
 
-game_server.findGame = function(player){
-    //game exists
+game_server.joinExistingGame = function(player, gameId){
     if(this.game_count){
-        for (var gameId in this.games){
-            var gameInstance = this.games[gameId];
+        var gameInstance = this.games[gameId];
+        if(gameInstance.player_count >= 2) return;
+        gameInstance.player_client = player;
+        gameInstance.gamecore.mouse.id = player.id;
+        gameInstance.player_count++;
 
-            if(gameInstance.player_count < 2){
-                gameInstance.player_client = player;
-                gameInstance.gamecore.mouse.id = player.id;
-                gameInstance.player_count++;
-                
-                player.game = gameInstance;
-                this.startGame(gameInstance);
-            }
-            else{
-                this.createGame(player);
-            }
-        }
-    }
-    else{
-        this.createGame(player);
-    }
+        player.game = gameInstance;
+        this.startGame(gameInstance);
+    };
 };
 
-game_server.joinExistingGame = function(player, gameName){
-    if(this.game_count){
-        var gameInstance = this.games[]
-    }
-}
-
-function emitEventToBothPlayers(eventName, data){
+function emitEventToBothPlayers(gameToUpdate, eventName, data){
     var data = data || {};
     gameToUpdate.player_host.emit(eventName, data);
     gameToUpdate.player_client.emit(eventName, data);

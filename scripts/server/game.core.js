@@ -4,6 +4,7 @@ game_core = function(instance){
     this.cat = positionPlayer(instance.player_host.id);
     this.mouse = positionPlayer(0);
     this.cheesePieces = positionCheese();
+    this.gameName = instance.gameName;
     
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;

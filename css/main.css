@@ -24,6 +24,11 @@ body{
     border: 2px solid rgba(40,40,124,0.2);
 }
 
+.btn:hover {
+    background-color: rgba(142, 177, 199, 0.5);
+    border: 2px solid #8EB1C7;
+}
+
 canvas {
     padding-left: 0;
     padding-right: 0;
@@ -44,7 +49,7 @@ canvas {
     max-width: 577px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 7%;
+    margin-top: 5%;
 }
 
 .status-container {
@@ -56,6 +61,16 @@ canvas {
     width: 32px;
     height: 32px;
     background-image: url(checked.png);
+    background-position:center;
+    background-repeat:no-repeat;
+}
+
+.disconnected {
+    width: 32px;
+    height: 32px;
+    background-image: url(cross.png);
+    background-position:center;
+    background-repeat:no-repeat;
 }
 
 .loader,

@@ -43,24 +43,26 @@ server.listen(port);
 var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function (client) {
-    // gameServer.findGame(client);
     lobbyServer.connect(client);
 
     client.on('gameCreated', function(data){
         lobbyServer.createServer(data.clientName);
         io.sockets.emit("new-game-created", Object.keys(lobbyServer.activeRooms));
     });
-    // client.on('pieceMoved', function(data) {
-    //     gameServer.pieceMoved(data);
-    // });
 
-    // client.on('message', function(data){
-    //     gameServer.handleClientMessage(client, data);
-    // });
+    client.on('pieceMoved', function(data) {
+        lobbyServer.pieceMoved(data);
+    });
+
+    client.on('joinGame', function(data){
+        io.sockets.emit("game-removed", data.roomName);
+        lobbyServer.joinGame(data.clientName, data.roomName);
+    });
     
     client.on('disconnect', function() {
-        lobbyServer.disconnect(client.lobby_name);
         var roomName = client.lobby_name;
+        console.log("NODE_DISCONNECT", roomName);
+        lobbyServer.disconnect(roomName);
         io.sockets.emit("game-removed", roomName);
     });
 });   

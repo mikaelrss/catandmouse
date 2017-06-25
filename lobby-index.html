@@ -2,6 +2,12 @@
 <head>
   <meta charset="UTF-8">
   <script src="/socket.io/socket.io.js"></script>
+  <script language="javascript" type="text/javascript" src="scripts/vendor/p5.js"></script>
+  <script language="javascript" type="text/javascript" src="scripts/vendor/p5.sound.js"></script>
+  <script language="javascript" type="text/javascript" src="scripts/coolor.js"></script>
+  <script language="javascript" type="text/javascript" src="scripts/sketch.js"></script>
+  <script language="javascript" type="text/javascript" src="scripts/square.js"></script>
+
   <script src="/scripts/lobby.js"></script>
   <link rel="stylesheet" type="text/css" href="css/main.css"/>
   <link rel="stylesheet" type="text/css" href="css/lobby.css"/>
@@ -9,11 +15,31 @@
 </head>
 
 <body>
-    <div class="container">
+    <div id="lobby">
         <div class="lobby-chooser">
-            <button class="btn" onclick="createPrivateRoom()">Create room</button>
+            <button class="btn game-room-btn" onclick="createPrivateRoom()">Create room</button>
 
-            <div class="room-list" id="room-list"></div>
+            <ul class="room-list" id="room-list"></ul>
+        </div>
+    </div>
+    <div class="container">
+        <div id="game-name"></div>
+        <div id="game"> 
+            <div class="status-container">
+                Mouse: 
+                <div id="mouse-status" class="loader"></div>
+            </div> 
+
+            <div class="status-container">
+                Cat: 
+                <div id="cat-status" class="loader"></div>
+            </div>
+
+
+            <div class="sketch__text">
+                Cheese pieces left: 
+                <span id="score__mouse"> </span>
+            </div>
         </div>
     </div>
 </body>
