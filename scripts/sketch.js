@@ -167,7 +167,9 @@ function registerEventListener(eventName, eventFunction){
 function cheeseEaten(cheeses) {
     mouseScore += 1;
     document.getElementById('score__mouse').innerHTML = numberOfCheesePieces - mouseScore;
-    initializeCheese(cheeses.cheese);
+    if(isMouse){
+        initializeCheese(cheeses.cheese);
+    }
 }
 
 function catWon(){
@@ -204,8 +206,8 @@ function init(data) {
     document.getElementById('score__mouse').innerHTML = numberOfCheesePieces;
     document.getElementById('defaultCanvas0').style.filter = 'blur(0px);'
     game = data;
-    bgMusic.loop();
-    bgMusic.amp(0.05);
+    // bgMusic.loop();
+    // bgMusic.amp(0.05);
     initializePlayers(data.core);
     if(isMouse){
         initializeCheese(data.core.cheesePieces);

@@ -7,7 +7,7 @@ var gameServer = require('./scripts/server/game.server.js');
 function handleRequest(req, res){
     var pathname = req.url;
 
-    if(pathname == '/'){
+    if(pathname === '/'){
         pathname = '/index.html';
     }
 
@@ -35,8 +35,8 @@ function handleRequest(req, res){
 var server = http.createServer(handleRequest);
 
 // Use for local development. Also switch io connection in sketch.js
-var port = 3001;
-// var port = process.env.PORT || 8080;
+var port = process.env.PORT || 3001;
+console.log("PORT", process.env.PORT);
 server.listen(port);
 var io = require('socket.io').listen(server);
 
